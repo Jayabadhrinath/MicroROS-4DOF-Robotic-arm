@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/opt/ros/humble/include/**",
+        "/home/ros/ws_microros/src/asrs_controller/include/**",
+        "/home/ros/ws_microros/src/asrs_description/include/**",
+        "/home/ros/ws_microros/src/asrs_gripper/include/**",
+        "/home/ros/ws_microros/src/asrs_moveit_config/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

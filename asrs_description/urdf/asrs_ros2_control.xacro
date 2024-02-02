@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="asrs_robot">
+
+    <xacro:property name="PI" value="3.14159265359" />
+
+    <!-- This macro defines the interface that each movable joint of the robot has to use,
+    that needs to be controlled by the ros2control -->
+    <xacro:macro name="joint_interface" params="number limit">
+        <joint name="joint_${number}">
+            <command_interface name="position">
+                <param name="min">${limit}</param>
+                <param name="max">-${limit}</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+    </xacro:macro>
+
+<!-- The ros2control block is used to configure and interface the robot's hardware
+with the ros2control library -->
+
+    <ros2_control name="RobotSystem" type="system">
+        <hardware>
+            <plugin>gazebo_ros2_control/GazeboSystem</plugin> 
+            <!-- The plugin has to be changed when using a real robot -->
+        </hardware>
+
+        <xacro:joint_interface number="1" limit="${PI}"/>
+        <xacro:joint_interface number="2" limit="${PI/4}"/>
+        <xacro:joint_interface number="3" limit="${PI/4}"/>
+        <xacro:joint_interface number="4" limit="${PI/4}"/>
+
+        <joint name="base_to_driver">
+            <command_interface name="position">
+                <param name="min">0.0</param>
+                <param name="max">${PI/4}</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="base_to_Rknuckle">
+            <param name="mimic">base_to_driver</param>            
+            <param name="multiplier">1</param>
+            <command_interface name="position">
+                <param name="min">0.0</param>
+                <param name="max">${PI/4}</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="driver_to_Lfinger">
+            <param name="mimic">base_to_driver</param>            
+            <param name="multiplier">1</param>
+            <command_interface name="position">
+                <param name="min">0.0</param>
+                <param name="max">${PI/4}</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="base_to_driven">
+            <param name="mimic">base_to_driver</param>            
+            <param name="multiplier">-1</param>
+            <command_interface name="position">
+                <param name="min">-${PI/4}</param>
+                <param name="max">0.0</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="driven_to_Rfinger">
+            <param name="mimic">base_to_driver</param>            
+            <param name="multiplier">-0.8</param>
+            <command_interface name="position">
+                <param name="min">-${PI/4}</param>
+                <param name="max">0.0</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="base_to_Lknuckle">
+            <param name="mimic">base_to_driver</param>            
+            <param name="multiplier">-0.8</param>
+            <command_interface name="position">
+                <param name="min">-${PI/4}</param>
+                <param name="max">0.0</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+    </ros2_control>
+    
+</robot>

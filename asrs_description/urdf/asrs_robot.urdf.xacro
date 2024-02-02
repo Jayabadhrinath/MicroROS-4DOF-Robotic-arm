@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="asrs_robot">
+
+    <xacro:include filename="$(find asrs_arm)/urdf/asrs_arm.urdf.xacro"/>
+    <xacro:include filename="$(find asrs_gripper)/urdf/asrs_gripper.urdf.xacro"/>
+    <xacro:include filename="$(find asrs_description)/urdf/asrs_gazebo.xacro"/>
+    <xacro:include filename="$(find asrs_description)/urdf/asrs_ros2_control.xacro"/>
+
+    <xacro:property name="PI" value="3.14159265359" />
+
+<!-- The transmission block is used to indicate the presence of 
+a mechanical transmission for each motor of the robot to each of its movable link -->
+
+    <xacro:macro name="arm_transmission" params="number">    
+      <transmission name="transmission_${number}">
+        <plugin>transmission_interface/SimpleTransmission</plugin>
+        <actuator name="motor_${number}" role="actuator1"/>
+        <joint name="joint_${number}" role="joint1">
+          <mechanical_reduction>1.0</mechanical_reduction>
+        </joint>
+      </transmission> 
+    </xacro:macro>
+
+    <link name="world" />
+
+    <joint name="robot_to_world" type="fixed">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <parent link="world"/>
+        <child link="link_1"/>            
+    </joint>
+
+    <joint name="joint_4" type="revolute">
+        <origin xyz="-0.02866 0.0 0.12448" rpy="0.0 0.0 0.0"/>
+        <parent link="link_4"/>
+        <child link="fixture"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="-${PI/4}" upper="${PI/4}" effort="0.0" velocity="0.0"/>
+    </joint>
+
+    <xacro:arm_transmission number="1"/>
+    <xacro:arm_transmission number="2"/>
+    <xacro:arm_transmission number="3"/>
+    <xacro:arm_transmission number="4"/>
+
+    <xacro:asrs_gripper />
+
+    <transmission name="gripper_transmission">
+      <plugin>transmission_interface/SimpleTransmission</plugin>
+      <actuator name="gripper_motor" role="actuator1"/>
+      <joint name="base_to_driver" role="joint1">
+        <mechanical_reduction>1.0</mechanical_reduction>
+      </joint>
+    </transmission> 
+    
+</robot>

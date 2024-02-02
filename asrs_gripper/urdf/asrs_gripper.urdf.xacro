@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot name="asrs_gripper" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="asrs_gripper" >
+
+  <xacro:property name="PI" value="3.14159265359" />
+  <xacro:property name="effort" value="30" />
+  <xacro:property name="velocity" value="10" />
+
+  <!-- <joint name="grippper_to_robot" type="revolute"> -->
+    <!-- <origin xyz="-0.0195 -0.0460 0.107" rpy="0.0 0.0 0.0"/> -->
+    <!-- <origin xyz="-0.035 -0.0485 0.107" rpy="0.0 0.0 0.0"/>
+    <parent link="${parent}"/>
+    <child link="base"/>
+    <axis xyz="0 1 0" />
+    <limit lower="0" upper="${PI/4}" effort="0" velocity="0" />
+  </joint> -->
+  <link name="fixture" />
+
+  <joint name="fixture_to_base" type="fixed">
+    <origin xyz="-0.007 -0.0487 -0.0175" rpy="0.0 0.0 0.0"/>
+    <parent link="fixture"/>
+    <child link="base"/>
+    
+  </joint>
+
+  <link name="base">
+    <inertial>
+      <origin
+        xyz="-0.0072504745124206 0.0261326294912613 0.0137554287417805"
+        rpy="0 0 0" />
+      <mass
+        value="0.0205390603196802" />
+      <inertia
+        ixx="4.87173906631305E-06"
+        ixy="-9.44978534830784E-07"
+        ixz="-2.96104608241946E-07"
+        iyy="2.87148208719335E-06"
+        iyz="-8.81546907169378E-07"
+        izz="5.79457761744383E-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0.0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asrs_gripper/meshes/base.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asrs_gripper/meshes/base.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="base_to_Rknuckle" type="continuous">
+    <origin
+      xyz="0.0 -0.0 -0.00018182"
+      rpy="0 0 0" />
+    <parent
+      link="base" />
+    <child
+      link="right_knuckle" />
+    <axis
+      xyz="0 0 1" />
+    <mimic joint="base_to_driver" multiplier="1" offset="0"/> 
+  </joint>
+  <link name="driver">
+    <inertial>
+      <origin
+        xyz="6.23831509330517E-06 -0.00569766188189018 -0.00181817736019795"
+        rpy="0 0 0" />
+      <mass
+        value="0.00256585966934385" />
+      <inertia
+        ixx="3.58254996193069E-07"
+        ixy="-3.79613591670467E-08"
+        ixz="4.59457738436128E-22"
+        iyy="9.47498478039295E-08"
+        iyz="4.28715490545391E-21"
+        izz="4.46162551545414E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asrs_gripper/meshes/driver.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asrs_gripper/meshes/driver.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="base_to_driver" type="revolute">
+    <origin
+      xyz="-0.018617 0.020144 -0.00018182"
+      rpy="0 0 0" />
+    <parent
+      link="base" />
+    <child
+      link="driver" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="${PI/4}"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link name="left_finger">
+    <inertial>
+      <origin
+        xyz="0.00380360078616061 -0.0330606014084368 -0.004250022591508"
+        rpy="0 0 0" />
+      <mass
+        value="0.00539747145206161" />
+      <inertia
+        ixx="1.64723224911383E-06"
+        ixy="2.53321007975048E-07"
+        ixz="1.39877319405667E-11"
+        iyy="1.31672711466561E-07"
+        iyz="-1.07567805325194E-12"
+        izz="1.71391043562613E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asrs_gripper/meshes/left_finger.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asrs_gripper/meshes/left_finger.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="driver_to_Lfinger" type="continuous">
+    <origin
+      xyz="-0.00060087 -0.024016 0.0086818"
+      rpy="0 0 0" />
+    <parent
+      link="driver" />
+    <child
+      link="left_finger" />
+    <axis
+      xyz="0 0 1" />
+    <mimic joint="base_to_driver" multiplier="1" offset="0"/> 
+  </joint>
+  <link name="driven">
+    <inertial>
+      <origin
+        xyz="6.17330638197008E-05 -0.00561079502748726 -0.00181817736019777"
+        rpy="0 0 0" />
+      <mass
+        value="0.00264161328462974" />
+      <inertia
+        ixx="3.58232862136713E-07"
+        ixy="4.11844621521431E-08"
+        ixz="-3.7760070372581E-22"
+        iyy="9.60511074489331E-08"
+        iyz="3.20741130404249E-21"
+        izz="4.472396674933E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asrs_gripper/meshes/driven.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asrs_gripper/meshes/driven.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="base_to_driven" type="continuous">
+    <origin
+      xyz="0.0082832 0.020144 -0.00018182"
+      rpy="0 0 0" />
+    <parent
+      link="base" />
+    <child
+      link="driven" />
+    <axis
+      xyz="0 0 -1" />
+    <mimic joint="base_to_driver" multiplier="-1" offset="0"/> 
+  </joint>
+  <link name="right_finger">
+    <inertial>
+      <origin
+        xyz="-0.00349952216474114 -0.0330941699419376 0.00425002259150882"
+        rpy="0 0 0" />
+      <mass
+        value="0.00539747142083419" />
+      <inertia
+        ixx="1.65176140965968E-06"
+        ixy="-2.39346645079797E-07"
+        ixz="1.39772372049357E-11"
+        iyy="1.27143548726399E-07"
+        iyz="1.20460101229829E-12"
+        izz="1.71391043365743E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asrs_gripper/meshes/right_finger.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asrs_gripper/meshes/right_finger.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="driven_to_Rfinger" type="continuous">
+    <origin
+      xyz="0.00094581 -0.023995 0.00018182"
+      rpy="0 0 0" />
+    <parent
+      link="driven" />
+    <child
+      link="right_finger" />
+    <axis
+      xyz="0 0 1" />
+    <mimic joint="base_to_driver" multiplier="-0.8" offset="0"/> 
+  </joint>
+  <link name="left_knuckle">
+    <inertial>
+      <origin
+        xyz="-0.0017363 -0.015402 0.0044318"
+        rpy="0 0 0" />
+      <mass
+        value="0.0015975" />
+      <inertia
+        ixx="2.0335E-07"
+        ixy="-2.2104E-08"
+        ixz="2.3011E-22"
+        iyy="9.7567E-09"
+        iyz="2.0614E-21"
+        izz="2.0885E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asrs_gripper/meshes/left_knuckle.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asrs_gripper/meshes/left_knuckle.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="base_to_Lknuckle" type="continuous">
+    <origin
+      xyz="-0.0097168 0.00014418 -0.00018182"
+      rpy="0 0 0" />
+    <parent
+      link="base" />
+    <child
+      link="left_knuckle" />
+    <axis
+      xyz="0 0 1" />
+    <mimic joint="base_to_driver" multiplier="-1" offset="0"/> 
+  </joint>
+  <link name="right_knuckle">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asrs_gripper/meshes/right_knuckle.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asrs_gripper/meshes/right_knuckle.STL" />
+      </geometry>
+    </collision>
+  </link>
+  </xacro:macro>
+</robot>

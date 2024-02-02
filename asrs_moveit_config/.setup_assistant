@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: asrs_description
+    relative_path: urdf/asrs_robot.urdf.xacro
+  srdf:
+    relative_path: config/asrs_robot.srdf
+  package_settings:
+    author_name: hariharan2096
+    author_email: hariharan2096@gmail.com
+    generated_timestamp: 1706883529
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity

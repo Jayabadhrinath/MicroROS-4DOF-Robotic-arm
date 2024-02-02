@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="asrs_gripper_transmission">
+
+    <transmission name="base_to_driver_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="base_to_driver">
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+        <!-- <hardwareInterface>EffortJointInterface</hardwareInterface> -->
+      </joint>
+      <actuator name="base_to_driver_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+        <!-- <hardwareInterface>EfforJointInterface</hardwareInterface> -->
+      </actuator>
+    </transmission>
+    
+    <!-- Mimic joints -->
+    <gazebo>
+      <plugin filename="libgazebo_mimic_joint_plugin.so" name="mimic_robotiq_85_1">
+        <joint> base_to_driver</joint>
+        <mimicJoint>base_to_driven</mimicJoint>
+        <multiplier>-1.0</multiplier>
+        <offset>0.0</offset>
+      </plugin>
+      <plugin filename="libgazebo_mimic_joint_plugin.so" name="mimic_robotiq_85_2">
+        <joint> base_to_driver</joint>
+        <mimicJoint>base_to_Rknuckle</mimicJoint>
+      </plugin>
+      <plugin filename="libgazebo_mimic_joint_plugin.so" name="mimic_robotiq_85_3">
+        <joint> base_to_driver</joint>
+        <mimicJoint>base_to_Lknuckle</mimicJoint>
+      </plugin>
+      <plugin filename="libgazebo_mimic_joint_plugin.so" name="mimic_robotiq_85_4">
+        <joint> base_to_driver</joint>
+        <mimicJoint>driver_to_Lfinger</mimicJoint>
+        <multiplier>-1.0</multiplier>
+        <offset>0.0</offset>
+      </plugin>
+      <plugin filename="libgazebo_mimic_joint_plugin.so" name="mimic_robotiq_85_5">
+        <joint> base_to_driver</joint>
+        <mimicJoint>driven_to_Rfinger</mimicJoint>
+        <multiplier>-1.0</multiplier>
+        <offset>0.0</offset>
+      </plugin>
+    </gazebo>
+
+  </xacro:macro>
+
+
+
+</robot>

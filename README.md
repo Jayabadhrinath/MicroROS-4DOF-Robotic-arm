@@ -13,7 +13,7 @@ Check the pdf for details on Robot Hardware.
 
 ### **QUICK START GUIDE:**
 
-1. Follow the link [micro_ROS_Setup] (https://micro.ros.org/docs/tutorials/core/overview/) to install and configure the micro-ROS libraries.
+1. Follow the link [micro_ROS_Setup](https://micro.ros.org/docs/tutorials/core/overview/) to install and configure the micro-ROS libraries.
 2. Clone this repository on the src folder of your working directory.
 3. Build your workspace using `colcon build`.
 4. Source your workspace.

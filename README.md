@@ -8,7 +8,7 @@ Kindly check the PDF for details on Robot Hardware.
 ### **SOFTWARE DEPENDENCIES:**
 
 - **OPERATING SYSTEM**- Ubuntu 22.04
-- **ROS DISTRO**- ROS2 IRON
+- **ROS DISTRO**- ROS2 Iron
 - **ARDUINO IDE VERSION**- Arduino IDE 2.1.1
 
 ### **QUICK START GUIDE:**

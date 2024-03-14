@@ -23,3 +23,5 @@ Kindly check the PDF for details on Robot Hardware.
 8. Launch the microros agent `ros2 run micro_ros_agent micro_micro_ros_agent serial --dev /dev/ttyACM0`.
 9. Compile and Upload the code.
 10. Use the GUI from RViz to simulate the Robot. Same motion will be replicated in the robot.
+
+PS: In the report, the circuit diagram is for a Arduino Mega microcontroller but the same concepts can be implemented for the Teensy 4.1 microcontroller. 
